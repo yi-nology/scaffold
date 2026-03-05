@@ -1,0 +1,76 @@
+services:
+  # Frontend Service
+  frontend:
+    build:
+      context: ../
+      dockerfile: deploy/frontend/Dockerfile
+    container_name: scaffold-frontend
+    ports:
+      - "${FRONTEND_PORT:-80}:80"
+    depends_on:
+      - backend
+    networks:
+      - scaffold-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Backend Service (Hertz)
+  backend:
+    build:
+      context: ../
+      dockerfile: deploy/backend/Dockerfile
+    container_name: scaffold-backend
+    ports:
+      - "${BACKEND_PORT:-9090}:9090"
+    environment:
+      - TZ=Asia/Shanghai
+      - CONFIG_PATH=/app/configs/config.yaml
+    volumes:
+      - ./data:/app/data:rw
+      - ./templates:/app/templates:ro
+      - ./cache:/app/cache:rw
+      - ./configs:/app/configs:ro
+    depends_on:
+      redis:
+        condition: service_healthy
+        required: false
+    networks:
+      - scaffold-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:9090/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Redis (optional)
+  redis:
+    image: redis:7-alpine
+    container_name: scaffold-redis
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - scaffold-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    profiles:
+      - redis
+
+networks:
+  scaffold-network:
+    driver: bridge
+
+volumes:
+  redis-data:

@@ -1,0 +1,71 @@
+name: "Web Application"
+version: "1.0.0"
+description: "A modern web application with customizable features"
+author: "Scaffold"
+tags:
+  - web
+  - frontend
+  - html
+
+variables:
+  - name: project_name
+    type: string
+    default: "my-app"
+    prompt: "Project name"
+    required: true
+    group: "Basic"
+  
+  - name: description
+    type: string
+    default: "A web application"
+    prompt: "Project description"
+    group: "Basic"
+  
+  - name: author
+    type: string
+    default: ""
+    prompt: "Author name"
+    group: "Basic"
+
+  - name: typescript
+    type: boolean
+    default: true
+    prompt: "Use TypeScript?"
+    group: "Features"
+
+  - name: css_framework
+    type: enum
+    options:
+      - tailwind
+      - bootstrap
+      - none
+    default: "tailwind"
+    prompt: "CSS Framework"
+    group: "Style"
+
+  - name: dark_mode
+    type: boolean
+    default: true
+    prompt: "Enable dark mode?"
+    group: "Style"
+
+  - name: eslint
+    type: boolean
+    default: true
+    prompt: "Add ESLint?"
+    group: "Features"
+
+  - name: prettier
+    type: boolean
+    default: true
+    prompt: "Add Prettier?"
+    group: "Features"
+
+files:
+  - source: "template/*"
+    target: "{{.project_name}}/"
+    template: true
+
+ignore:
+  - ".git"
+  - "scaffold.yaml"

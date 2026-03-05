@@ -1,0 +1,166 @@
+syntax = "proto3";
+
+package api;
+
+option go_package = "scaffold";
+
+import "api/api.proto";
+
+// ============ Common ============
+
+message Empty {}
+
+message BaseResponse {
+  int32 code = 1;
+  string message = 2;
+}
+
+// ============ Health ============
+
+message HealthResponse {
+  int32 code = 1;
+  string message = 2;
+  string status = 3;
+}
+
+// ============ Template ============
+
+message TemplateMeta {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string author = 4;
+  repeated string tags = 5;
+  string repository = 6;
+}
+
+message ListTemplatesRequest {}
+
+message ListTemplatesResponse {
+  int32 code = 1;
+  string message = 2;
+  repeated TemplateMeta data = 3;
+}
+
+message GetTemplateRequest {
+  string id = 1 [(api.path) = "id"];
+}
+
+message GetTemplateTagsRequest {
+  string id = 1 [(api.path) = "id"];
+}
+
+message TagInfo {
+  string name = 1;
+  string message = 2;
+}
+
+message GetTemplateTagsResponse {
+  int32 code = 1;
+  string message = 2;
+  repeated TagInfo data = 3;
+}
+
+message AddTemplateRequest {
+  string id = 1;
+  string repository = 2;
+  string version = 3;
+}
+
+message AddTemplateData {
+  string task_id = 1;
+}
+
+message AddTemplateResponse {
+  int32 code = 1;
+  string message = 2;
+  AddTemplateData data = 3;
+}
+
+message DeleteTemplateRequest {
+  string id = 1;
+}
+
+// ============ Generate ============
+
+message GenerateRequest {
+  string template_id = 1;
+  string version = 2;
+  map<string, string> variables = 3;
+}
+
+// Note: Generate response is binary ZIP stream, not a proto message
+// Handler must use c.Data() directly
+
+// ============ Task ============
+
+message GetTaskRequest {
+  string id = 1 [(api.path) = "id"];
+}
+
+message TaskInfo {
+  string id = 1;
+  string status = 2;
+  string message = 3;
+  string created_at = 4;
+  string updated_at = 5;
+  string template_id = 6;
+}
+
+message GetTaskResponse {
+  int32 code = 1;
+  string message = 2;
+  TaskInfo data = 3;
+}
+
+message ListTasksRequest {}
+
+message ListTasksResponse {
+  int32 code = 1;
+  string message = 2;
+  repeated TaskInfo data = 3;
+}
+
+// ============ Service ============
+
+service ScaffoldService {
+  // Health check
+  rpc Health(Empty) returns (HealthResponse) {
+    option (api.get) = "/health";
+  }
+
+  // Template management
+  rpc ListTemplates(ListTemplatesRequest) returns (ListTemplatesResponse) {
+    option (api.get) = "/api/templates";
+  }
+
+  rpc GetTemplate(GetTemplateRequest) returns (ListTemplatesResponse) {
+    option (api.get) = "/api/templates/:id";
+  }
+
+  rpc GetTemplateTags(GetTemplateTagsRequest) returns (GetTemplateTagsResponse) {
+    option (api.get) = "/api/templates/:id/tags";
+  }
+
+  rpc AddTemplate(AddTemplateRequest) returns (AddTemplateResponse) {
+    option (api.post) = "/api/templates";
+  }
+
+  rpc DeleteTemplate(DeleteTemplateRequest) returns (BaseResponse) {
+    option (api.post) = "/api/templates/delete";
+  }
+
+  // Code generation
+  rpc Generate(GenerateRequest) returns (BaseResponse) {
+    option (api.post) = "/api/generate";
+  }
+
+  // Task management
+  rpc GetTask(GetTaskRequest) returns (GetTaskResponse) {
+    option (api.get) = "/api/tasks/:id";
+  }
+
+  rpc ListTasks(ListTasksRequest) returns (ListTasksResponse) {
+    option (api.get) = "/api/tasks";
+  }
+}

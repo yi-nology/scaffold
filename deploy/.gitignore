@@ -1,0 +1,10 @@
+# Scaffold Deploy Data Directories
+data/
+.env
+
+# Build artifacts
+*.db
+*.log
+
+# Docker
+.dockerignore
