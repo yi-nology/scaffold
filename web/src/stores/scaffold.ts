@@ -100,7 +100,7 @@ export const useScaffoldStore = defineStore('scaffold', () => {
       const res = await fetch(`${API_BASE}/templates/${id}/tags`)
       const response = await res.json()
       if (response.code === 0) {
-        availableTags.value = response.data?.tags || []
+        availableTags.value = response.data || []
         selectedVersion.value = ''
       } else {
         availableTags.value = []
