@@ -49,12 +49,10 @@ services:
       retries: 3
       start_period: 30s
 
-  # Redis (optional)
+  # Redis Service
   redis:
     image: redis:7-alpine
     container_name: scaffold-redis
-    ports:
-      - "${REDIS_PORT:-6379}:6379"
     volumes:
       - redis-data:/data
     networks:
@@ -65,8 +63,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
-    profiles:
-      - redis
 
 networks:
   scaffold-network:

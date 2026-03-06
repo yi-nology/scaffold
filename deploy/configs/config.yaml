@@ -24,7 +24,7 @@ database:
 
 redis:
   enable: true
-  host: "localhost"
+  host: "redis"
   port: 6379
   password: ""
   db: 0
