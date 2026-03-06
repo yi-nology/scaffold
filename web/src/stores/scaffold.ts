@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
-interface Variable {
+export interface Variable {
   name: string
   type: 'string' | 'boolean' | 'enum' | 'number'
   default: any
@@ -12,7 +12,7 @@ interface Variable {
   group?: string
 }
 
-interface TemplateMeta {
+export interface TemplateMeta {
   id: string
   name: string
   description: string
@@ -20,6 +20,11 @@ interface TemplateMeta {
   tags: string[]
   version: string
   repository?: string
+  // 新增字段
+  homepage?: string
+  bugs?: string
+  license?: string
+  keywords?: string[]
 }
 
 interface TagInfo {
@@ -75,6 +80,10 @@ export const useScaffoldStore = defineStore('scaffold', () => {
           tags: config.tags || [],
           version: config.version || '',
           repository: data.repository,
+          homepage: config.homepage || '',
+          bugs: config.bugs || '',
+          license: config.license || '',
+          keywords: config.keywords || [],
         }
         variables.value = config.variables || []
         

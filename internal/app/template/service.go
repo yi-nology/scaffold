@@ -239,6 +239,11 @@ func (s *Service) ListTemplates() []conf.TemplateMeta {
 			Author:      source.Config.Author,
 			Tags:        source.Config.Tags,
 			Repository:  source.Repository,
+			Version:     source.Config.Version,
+			// 新增字段
+			Homepage:    source.Config.Homepage,
+			License:     source.Config.License,
+			Keywords:    source.Config.Keywords,
 		}
 		result = append(result, meta)
 	}
@@ -307,6 +312,11 @@ func (s *Service) syncToDB(id, repoURL, localPath string, cfg *conf.TemplateConf
 		Repository:  repoURL,
 		LocalPath:   localPath,
 		Tags:        cfg.Tags,
+		// 新增字段同步
+		Homepage:    cfg.Homepage,
+		Bugs:        cfg.Bugs,
+		License:     cfg.License,
+		Keywords:    cfg.Keywords,
 	}
 
 	exists, err := s.repository.Exists(ctx, id)

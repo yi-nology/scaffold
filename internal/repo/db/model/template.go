@@ -41,6 +41,13 @@ type TemplateModel struct {
 	Author      string      `gorm:"size:100" json:"author"`
 	Version     string      `gorm:"size:50" json:"version"`
 	Repository  string      `gorm:"size:500" json:"repository"`
+	
+	// 新增字段
+	Homepage    string      `gorm:"size:500" json:"homepage"`
+	Bugs        string      `gorm:"size:500" json:"bugs"`
+	License     string      `gorm:"size:100" json:"license"`
+	Keywords    StringArray `gorm:"type:json" json:"keywords"`
+	
 	LocalPath   string      `gorm:"size:500" json:"local_path"`
 	Tags        StringArray `gorm:"type:json" json:"tags"`
 	CreatedAt   time.Time   `gorm:"autoCreateTime" json:"created_at"`

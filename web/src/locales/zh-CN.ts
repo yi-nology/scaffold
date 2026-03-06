@@ -23,7 +23,25 @@ export default {
     loading: '正在加载模板...',
     empty: '暂无可用模板',
     emptyHint: '请使用 CLI 或 API 添加模板',
-    unknown: '未知'
+    unknown: '未知',
+    detail: {
+      projectInfo: '项目信息',
+      techTags: '技术标签',
+      keywords: '关键词',
+      links: '相关链接',
+      viewSource: '查看源码',
+      homepage: '项目主页',
+      reportBug: '提交 Bug',
+      license: '许可证',
+      author: '作者',
+      version: '版本',
+      variables: '可配置变量',
+      variableCount: '{count} 项',
+      defaultValue: '默认',
+      required: '必填',
+      expand: '展开详情',
+      collapse: '收起详情',
+    }
   },
   form: {
     required: '必填',

@@ -32,24 +32,3 @@ type Hook struct {
 	Pre  string `yaml:"pre,omitempty" json:"pre,omitempty"`
 	Post string `yaml:"post,omitempty" json:"post,omitempty"`
 }
-
-type TemplateConfig struct {
-	Name        string        `yaml:"name" json:"name"`
-	Version     string        `yaml:"version" json:"version"`
-	Description string        `yaml:"description" json:"description"`
-	Author      string        `yaml:"author,omitempty" json:"author,omitempty"`
-	Tags        []string      `yaml:"tags,omitempty" json:"tags,omitempty"`
-	Variables   []Variable    `yaml:"variables" json:"variables"`
-	Files       []FileMapping `yaml:"files" json:"files"`
-	Hooks       Hook          `yaml:"hooks,omitempty" json:"hooks,omitempty"`
-	Ignore      []string      `yaml:"ignore,omitempty" json:"ignore,omitempty"`
-}
-
-type TemplateMeta struct {
-	ID          string   `json:"id"`
-	Name        string   `json:"name"`
-	Description string   `json:"description"`
-	Author      string   `json:"author"`
-	Tags        []string `json:"tags"`
-	Repository  string   `json:"repository"`
-}

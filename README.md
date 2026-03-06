@@ -97,6 +97,9 @@ scaffold/
 │   └── zip/              # ZIP 打包工具
 ├── web/                   # Vue 3 前端应用
 │   ├── src/              # 源代码
+│   │   ├── components/   # Vue 组件（模板列表、模板详情、配置表单等）
+│   │   ├── stores/       # Pinia 状态管理
+│   │   └── locales/      # 国际化（中文/英文）
 │   ├── public/           # 静态资源
 │   └── package.json      # 前端依赖
 ├── deploy/                # Docker 部署配置
@@ -129,9 +132,57 @@ make build
 
 访问 http://localhost:3000 使用图形化界面：
 - 🎨 模板选择和配置
-- ⚙️ 项目参数设置
+- 📋 模板详情展示（版本、许可证、技术标签、关键词、相关链接、变量概览）
+- ⚙️ 项目参数设置（支持文本、数字、枚举、布尔等字段类型）
 - 📦 一键生成和下载
 - 🔄 异步模板管理
+
+### scaffold.yaml 模板配置
+
+每个模板仓库根目录需包含 `scaffold.yaml` 文件，定义模板元信息和可配置变量：
+
+```yaml
+name: "My Template"
+version: "1.0.0"
+description: "模板描述"
+author: "作者"
+repository: "https://github.com/user/repo"
+homepage: "https://github.com/user/repo#readme"
+bugs: "https://github.com/user/repo/issues"
+license: "MIT"
+keywords: [go, hertz, microservice]
+tags: [go, hertz, cloudwego]
+
+variables:
+  - name: project_name
+    type: string
+    default: "my-service"
+    prompt: "项目名称"
+    required: true
+    group: "Basic"
+  - name: db_driver
+    type: enum
+    options: [sqlite, mysql, postgres]
+    default: "sqlite"
+    prompt: "数据库类型"
+    group: "Database"
+  - name: enable_redis
+    type: boolean
+    default: false
+    prompt: "启用 Redis"
+    group: "Features"
+
+files:
+  - source: "."
+    target: "{{.project_name}}/"
+    template: true
+
+ignore:
+  - ".git"
+  - "scaffold.yaml"
+```
+
+支持的变量类型：`string`、`number`、`boolean`、`enum`
 
 ### API 接口
 

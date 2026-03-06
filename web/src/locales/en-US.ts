@@ -23,7 +23,25 @@ export default {
     loading: 'Loading templates...',
     empty: 'No templates available',
     emptyHint: 'Add templates using the CLI or API',
-    unknown: 'Unknown'
+    unknown: 'Unknown',
+    detail: {
+      projectInfo: 'Project Info',
+      techTags: 'Technology',
+      keywords: 'Keywords',
+      links: 'Links',
+      viewSource: 'Source Code',
+      homepage: 'Homepage',
+      reportBug: 'Report Bug',
+      license: 'License',
+      author: 'Author',
+      version: 'Version',
+      variables: 'Variables',
+      variableCount: '{count} options',
+      defaultValue: 'Default',
+      required: 'Required',
+      expand: 'Show Details',
+      collapse: 'Hide Details',
+    }
   },
   form: {
     required: 'Required',

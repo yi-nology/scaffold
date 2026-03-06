@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useScaffoldStore } from '../stores/scaffold'
+import TemplateDetail from './TemplateDetail.vue'
 
 const { t } = useI18n()
 const store = useScaffoldStore()
@@ -78,6 +79,13 @@ function toggleBoolean(name: string) {
         </div>
       </div>
     </div>
+
+    <!-- ── Template Detail ── -->
+    <TemplateDetail
+      v-if="store.selectedTemplate"
+      :template="store.selectedTemplate"
+      :variables="store.variables"
+    />
 
     <!-- ── Version Selector ── -->
     <div v-if="store.availableTags.length > 0" class="glass-card rounded-2xl overflow-hidden">
